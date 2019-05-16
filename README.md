@@ -3,6 +3,7 @@
 | Name | Value |
 |---:|:---|
 | **Course** | Software Engineering - 44393 - CSCI 490 - 001 - Fall 2019 |
+| **Student** | A Student |
 | **Mav User**            | astudent |
 | **Github User**         | gituser123 |
 | **Repository**          | https://github.com/wmacevoy/csci000-astudent |
