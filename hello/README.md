@@ -1,6 +1,6 @@
 # Hello
 
-Make a Greeting class that can print out greeting messages.  The makefile is fairly generic, and, if you structure your project as
+Make a greet function class that can return greeting messages.  The makefile is fairly generic, and, if you structure your project as
 
 ```
 src/*.cpp
@@ -35,12 +35,12 @@ bin/hello
 
 ## Clean-Build-Test Screen Capture
 
-[clean-test-build.mov](https://raw.githubusercontent.com/wmacevoy/csci000-astudent/master/hello/clean-build-test.mov)
-
+![clean-test-build.png](clean-build-test.png)
 
 ## References
 
 1. [GNU make tutorial](https://linuxhint.com/gnu-make-tutorial/)
 1. [C++ Google Test](https://github.com/google/googletest)
+1. [Google Test Primer](https://www.learncpp.com/cpp-tutorial/89-class-code-and-header-files/)
 1. [src/include](https://www.learncpp.com/cpp-tutorial/89-class-code-and-header-files/)
 
