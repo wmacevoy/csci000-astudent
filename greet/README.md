@@ -36,7 +36,7 @@ bin/greet
 ## Clean-Build-Test Screen Capture
 
 Note it says hello, but I moved the project to "greet" for a simpler hello...
-[clean-test-build.mov](https://raw.githubusercontent.com/wmacevoy/csci000-astudent/master/hello/clean-build-test.mov)
+[clean-test-build.mov](https://raw.githubusercontent.com/wmacevoy/csci000-astudent/master/greet/clean-build-test.mov)
 
 
 ## References
