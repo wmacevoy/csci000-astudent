@@ -21,8 +21,9 @@ bin/test_hello
 bin/hello
 ```
 
-## Proof
+## Clean-Build-Test Screen Capture
 
-[Screen Capture](https://raw.githubusercontent.com/wmacevoy/csci000-astudent/master/hello/clean-build-test.mov)
+[clean-test-build.mov](https://raw.githubusercontent.com/wmacevoy/csci000-astudent/master/hello/clean-build-test.mov)
+
 
 
