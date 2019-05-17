@@ -11,16 +11,9 @@
 
 ## Assignments
 
-Each project
-
-* Assignment # 1: Hello World
-```
-Notice my tests test different messages.
-```
-* Assignment # 2: Hello Group
-```
-Our group project was hosted 
-```
+| Assignment | Location | Notes |
+|------------|----------|-------|
+| 1 - Hello  | [hello](https://github.com/wmacevoy/csci000-astudent/tree/master/hello) | Notice my tests test different messages. |
 
 ## References
 
