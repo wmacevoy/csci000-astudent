@@ -23,6 +23,6 @@ bin/hello
 
 ## Proof
 
-[Screen Capture](clean-build-test.mov)
+[Screen Capture](https://raw.githubusercontent.com/wmacevoy/csci000-astudent/master/hello/clean-build-test.mov)
 
 
