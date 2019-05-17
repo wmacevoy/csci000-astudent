@@ -13,7 +13,7 @@
 
 | Assignment | Location | Notes |
 |------------|----------|-------|
-| 1 - Hello  | [hello](https://github.com/wmacevoy/csci000-astudent/tree/master/hello) | Notice my tests test different messages. |
+| 1 - Hello  | [hello](https://github.com/wmacevoy/csci000-astudent/tree/master/hello) | Notice my tests test different names. |
 
 ## References
 

@@ -1,8 +1,10 @@
-#include "Greeter.h"
+#include <iostream>
+
+#include "hello.h"
 
 int main(int argc, char *argv[]) 
 {
-  hello::Greeter greeter;
-  greeter.greet();
+  std::cout << hello("World") << std::endl;
   return 0;
 }
+
