@@ -9,6 +9,6 @@ namespace hello {
 
   void Greeter::greet(std::ostream &out) const
   {
-    out << "hello, " << name << std::endl;
+    out << "Hello, " << name << "!" << std::endl;
   }
 }
