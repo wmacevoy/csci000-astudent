@@ -13,7 +13,8 @@
 
 | Assignment | Location | Notes |
 |------------|----------|-------|
-| 1 - Hello  | [hello](https://github.com/wmacevoy/csci000-astudent/tree/master/hello) | Notice my tests test different names. |
+| 1 - Hello  | [hello](https://github.com/wmacevoy/csci000-astudent/tree/master/hello) | Test C++ function with Google Test |
+| 1 - Greet  | [greet](https://github.com/wmacevoy/csci000-astudent/tree/master/greet) | Test C++ class with Google Test |
 
 ## References
 
