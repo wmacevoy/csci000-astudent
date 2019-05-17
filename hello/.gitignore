@@ -1,0 +1,301 @@
+####
+#
+# combination of gitignore for c++, emacs, vscode, osx, linux, windows
+#
+###
+
+# c++
+
+/tmp
+/bin
+/lib
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+
+# vscode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# Org-mode
+.org-id-locations
+*_archive
+
+# flymake-mode
+*_flymake.*
+
+# eshell files
+/eshell/history
+/eshell/lastdir
+
+# elpa packages
+/elpa/
+
+# reftex files
+*.rel
+
+# AUCTeX auto folder
+/auto/
+
+# cask packages
+.cask/
+dist/
+
+# Flycheck
+flycheck_*.el
+
+# server auth directory
+/server/
+
+# projectiles files
+.projectile
+
+# directory configuration
+.dir-locals.el
+
+# network security
+/network-security.data
+
+# osx
+
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# linux
+
+#
+# NOTE! Don't add files that are generated in specific
+# subdirectories here. Add them in the ".gitignore" file
+# in that subdirectory instead.
+#
+# NOTE! Please use 'git ls-files -i --exclude-standard'
+# command after changing this file, to see if there are
+# any tracked files which get ignored after the change.
+#
+# Normal rules (sorted alphabetically)
+#
+.*
+*.a
+*.asn1.[ch]
+*.bin
+*.bz2
+*.c.[012]*.*
+*.dt.yaml
+*.dtb
+*.dtb.S
+*.dwo
+*.elf
+*.gcno
+*.gz
+*.i
+*.ko
+*.lex.c
+*.ll
+*.lst
+*.lz4
+*.lzma
+*.lzo
+*.mod.c
+*.o
+*.o.*
+*.order
+*.patch
+*.s
+*.so
+*.so.dbg
+*.su
+*.symtypes
+*.tab.[ch]
+*.tar
+*.xz
+Module.symvers
+modules.builtin
+
+#
+# Top-level generic files
+#
+/tags
+/TAGS
+/linux
+/vmlinux
+/vmlinux.32
+/vmlinux-gdb.py
+/vmlinuz
+/System.map
+/Module.markers
+/modules.builtin.modinfo
+
+#
+# RPM spec file (make rpm-pkg)
+#
+/*.spec
+
+#
+# Debian directory (make deb-pkg)
+#
+/debian/
+
+#
+# Snap directory (make snap-pkg)
+#
+/snap/
+
+#
+# tar directory (make tar*-pkg)
+#
+/tar-install/
+
+#
+# git files that we don't want to ignore even if they are dot-files
+#
+!.gitignore
+!.mailmap
+!.cocciconfig
+!.clang-format
+
+#
+# Generated include files
+#
+/include/config/
+/include/generated/
+/include/ksym/
+/arch/*/include/generated/
+
+# stgit generated dirs
+patches-*
+
+# quilt's files
+patches
+series
+
+# cscope files
+cscope.*
+ncscope.*
+
+# gnu global files
+GPATH
+GRTAGS
+GSYMS
+GTAGS
+
+# id-utils files
+ID
+
+*.orig
+*~
+\#*#
+
+#
+# Leavings from module signing
+#
+extra_certificates
+signing_key.pem
+signing_key.priv
+signing_key.x509
+x509.genkey
+
+# Kconfig presets
+/all.config
+/alldef.config
+/allmod.config
+/allno.config
+/allrandom.config
+/allyes.config
+
+# Kdevelop4
+*.kdev4
+
+# windows
+
+# Windows thumbnail cache files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+
+# Dump file
+*.stackdump
+
+# Folder config file
+[Dd]esktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
