@@ -27,7 +27,7 @@
 #       make mains
 
 # c++ compile flags
-CXXFLAGS=-Iinclude -g -O2 -stdlib=libc++ -std=c++14 -fPIC
+CXXFLAGS=-pthread -Iinclude -g -O2 -std=c++14 -fPIC
 
 include Makefile.googletest
 
@@ -76,9 +76,11 @@ tmp/%.cpp.d: src/%.cpp
 	mkdir -p `dirname $@`
 	$(CXX) $(CXXFLAGS) -MM -MT '$(patsubst src/%.cpp,tmp/%.cpp.o,$<)' $< > $@
 
-# use (and maybe update) dependency rules unless I am cleaning
+# use (and maybe update) dependency rules unless I am cleaning or makeing googletests
 ifneq (clean,$(MAKECMDGOALS))
+ifneq (googletest,$(MAKECMDGOALS))
 -include $(patsubst src/%.cpp,tmp/%.cpp.d,$(PARTS) $(MAINS) $(TESTS))
+endif
 endif
 
 # generic compile a c++ test file rule
@@ -94,8 +96,10 @@ tmp/%.cpp.o: src/%.cpp
 
 # generic link an executable rule
 bin/% : tmp/main_%.cpp.o $(PARTO) 
+	mkdir -p `dirname $@`
 	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
 
 # generic link a test executable rule
 bin/test_% : tmp/test_%.cpp.o $(PARTO)
+	mkdir -p `dirname $@`
 	$(CXX) $(CXXFLAGS) $(GOOGLE_TEST_FLAGS) -o $@ $^ $(LDFLAGS) $(GOOGLE_TEST_LIBS)

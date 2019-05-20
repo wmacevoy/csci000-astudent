@@ -32,10 +32,19 @@ bin/test_hello
 ```bash
 bin/hello
 ```
-
 ## Clean-Build-Test Screen Capture
 
 ![clean-test-build.png](clean-build-test.png)
+
+## Docker
+
+To create a reproducible build (advanced) and you have docker installed, you can do the following:
+
+```bash
+docker build -t cpp-hello .
+docker run -i --rm -t cpp-hello test_hello # test
+docker run -i --rm -t cpp-hello hello # run
+```
 
 ## References
 
@@ -43,4 +52,5 @@ bin/hello
 1. [C++ Google Test](https://github.com/google/googletest)
 1. [Google Test Primer](https://www.learncpp.com/cpp-tutorial/89-class-code-and-header-files/)
 1. [src/include](https://www.learncpp.com/cpp-tutorial/89-class-code-and-header-files/)
+
 
