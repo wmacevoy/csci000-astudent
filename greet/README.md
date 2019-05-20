@@ -38,6 +38,15 @@ bin/greet
 Note it says hello, but I moved the project to "greet" for a simpler hello...
 [clean-test-build.mov](https://raw.githubusercontent.com/wmacevoy/csci000-astudent/master/greet/clean-build-test.mov)
 
+## Docker
+
+To create a reproducible build (advanced) and you have docker installed, you can do the following:
+
+```bash
+docker build -t cpp-greet .
+docker run -i --rm -t cpp-greet test_greet # test
+docker run -i --rm -t cpp-greet greet # run
+```
 
 ## References
 
