@@ -1,6 +1,8 @@
 # Hello
 
-Make a greet function class that can return greeting messages.  The makefile is fairly generic, and, if you structure your project as
+Make a greet function that can return greeting messages.
+
+The makefile is fairly generic, and, if you structure your project as
 
 ```
 src/*.cpp
@@ -42,8 +44,8 @@ To create a reproducible build (advanced) and you have docker installed, you can
 
 ```bash
 docker build -t cpp-hello .
-docker run -i --rm -t cpp-hello test_hello # test
-docker run -i --rm -t cpp-hello hello # run
+docker run --rm -t cpp-hello test_hello # test
+docker run --rm -t cpp-hello hello # run
 ```
 
 ## References
