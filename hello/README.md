@@ -1,6 +1,6 @@
 # Hello
 
-Make a greet function that can return greeting messages.
+This makes a greet function that can return greeting messages.
 
 The makefile is fairly generic, and, if you structure your project as
 
