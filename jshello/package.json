@@ -1,0 +1,17 @@
+{
+  "name": "js-hello-wmacevoy",
+  "version": "1.0.0",
+  "description": "example hello",
+  "author": "Warren MacEvoy <wmacevoy@coloradomesa.edu>",
+  "license": "MIT",
+  "main": "main.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "chai": "*",
+    "mocha": "*"
+  }
+}
