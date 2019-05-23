@@ -4,9 +4,10 @@
   "description": "example hello",
   "author": "Warren MacEvoy <wmacevoy@coloradomesa.edu>",
   "license": "MIT",
-  "main": "main.js",
+  "main": "main.mjs",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "server": "http-server -a localhost -p 8080"
   },
   "dependencies": {
   },
