@@ -1,6 +1,6 @@
 # csci000-astudent
 
-Sample github repo demonstrating how to turn in assignemnts.
+Sample github repo demonstrating how to turn in assignments to Dr. MacEvoy ( [CMU](https://org.coloradomesa.edu/~wmacevoy) | [github](https://github.com/wmacevoy) )
 
 | Name | Value |
 |---:|:---|
