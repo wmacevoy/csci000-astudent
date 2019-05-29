@@ -37,9 +37,7 @@ bin/greet
 
 Note it says hello, but I moved the project to "greet" for a simpler hello...
 
-As a mov: (must download to play): 
-
-![clean-test-build.mov](https://raw.githubusercontent.com/wmacevoy/csci000-astudent/master/greet/clean-build-test.mov)
+As a mov: (must download to play): [clean-test-build.mov](https://raw.githubusercontent.com/wmacevoy/csci000-astudent/master/greet/clean-build-test.mov)
 
 As a [gif](https://cloudconvert.com/mov-to-gif)
 
