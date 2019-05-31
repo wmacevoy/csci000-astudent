@@ -13,10 +13,11 @@ Sample github repo demonstrating how to turn in assignments to Dr. MacEvoy ( [CM
 
 ## Assignments
 
-| Assignment | Location | Notes |
-|------------|----------|-------|
-| 1 - Hello  | [hello](https://github.com/wmacevoy/csci000-astudent/tree/master/hello) | Test C++ function with Google Test |
-| 1 - Greet  | [greet](https://github.com/wmacevoy/csci000-astudent/tree/master/greet) | Test C++ class with Google Test |
+| Assignment | Due Date | Stub | Test | Done | Location | Notes |
+|------------|----------|------|------|------|----------|-------|
+| 1 - Hello  | 1-Jan-20 | [x]  | [x]  | [x]  | [hello](https://github.com/wmacevoy/csci000-astudent/tree/master/hello) | Test C++ function with Google Test |
+| 2 - Greet  | 2-Jan-20 | [x] | [x]  | [x]  | [x]  | [greet](https://github.com/wmacevoy/csci000-astudent/tree/master/greet) | Test C++ class with Google Test |
+| 3 - Kattis    | 3-Jan-20 | [o] | [o]  | [o]  | [o]  |   |  Write solution to [towers](https://open.kattis.com/problems/towers) |
 
 ## References
 
