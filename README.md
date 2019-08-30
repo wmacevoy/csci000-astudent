@@ -13,8 +13,8 @@
 
 | Assignment | Location | Notes |
 |------------|----------|-------|
-| 1 - Hello  | [hello](https://github.com/wmacevoy/csci000-astudent/tree/master/hello) | Test C++ function with Google Test |
-| 1 - Greet  | [greet](https://github.com/wmacevoy/csci000-astudent/tree/master/greet) | Test C++ class with Google Test |
+| 1 - C++ Hello  | [cpp-hello](https://github.com/wmacevoy/csci000-astudent/tree/master/cpp-hello) | Test C++ function with Google Test |
+| 1 - C++ Greet  | [cpp-greet](https://github.com/wmacevoy/csci000-astudent/tree/master/cpp-greet) | Test C++ class with Google Test |
 
 ## References
 
