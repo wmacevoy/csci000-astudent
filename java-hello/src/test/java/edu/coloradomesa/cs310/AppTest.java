@@ -5,6 +5,10 @@
  */
 package edu.coloradomesa.cs310;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -62,11 +66,12 @@ public class AppTest {
     @Test
     public void testSetWho() {
         System.out.println("setWho");
-        String who = "";
+        String who = "王秀英";
         App instance = new App();
         instance.setWho(who);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String expResult = who;
+        String result = instance.getWho();
+        assertEquals(expResult, result);
     }
 
     /**
@@ -76,11 +81,9 @@ public class AppTest {
     public void testGetGreeting() {
         System.out.println("getGreeting");
         App instance = new App();
-        String expResult = "";
+        String expResult = "Hello";
         String result = instance.getGreeting();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -89,37 +92,93 @@ public class AppTest {
     @Test
     public void testSetGreeting() {
         System.out.println("setGreeting");
-        String greeting = "";
+        String greeting = "مرحبا";
         App instance = new App();
         instance.setGreeting(greeting);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String result = instance.getGreeting();
+        String expResult = greeting;
+        assertEquals(expResult, result);
     }
 
     /**
      * Test of main method, of class App.
+     *
+     * Since this has side effects; it is hard to test.
      */
     @Test
     public void testMain() throws Exception {
         System.out.println("main");
-        String[] args = null;
-        App.main(args);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        String expResult = "Hello World!" + System.lineSeparator();
+        PrintStream sysOut = System.out;
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        PrintStream testOut = new PrintStream(buffer);
+        try {
+            System.setOut(testOut);
+            String[] args = new String[]{};
+            App.main(args);
+        } finally {
+            System.setOut(sysOut);
+            testOut.close();
+        }
+
+        String result = buffer.toString(StandardCharsets.UTF_8);
+
+        assertEquals(expResult, result);
     }
 
     /**
      * Test of getWho method, of class App.
      */
     @Test
-    public void testGetWho() {
-        System.out.println("getWho");
+    public void testRun() {
+        System.out.println("run");
+        String who = "王秀英";
+        String greeting = "مرحبا";
+        String message = greeting + " " + who + "!";
+
         App instance = new App();
-        String expResult = "";
-        String result = instance.getWho();
+        instance.setWho(who);
+        instance.setGreeting(greeting);
+
+        String expResult = message + System.lineSeparator();
+        PrintStream sysOut = System.out;
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        PrintStream testOut = new PrintStream(buffer);
+        try {
+            System.setOut(testOut);
+            instance.run();
+        } finally {
+            System.setOut(sysOut);
+            testOut.close();
+        }
+
+        String result = buffer.toString(StandardCharsets.UTF_8);
+
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
+    @Test
+    public void testDefaultMessage() {
+        String expResult = "Hello World!";
+        App instance = new App();
+        String result = instance.getMessage();
+
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testCustomMessage() {
+        String who = "王秀英";
+        String greeting = "مرحبا";
+        String message = greeting + " " + who + "!";
+
+        App instance = new App();
+        instance.setWho(who);
+        instance.setGreeting(greeting);
+        String expResult = message;
+        String result = instance.getMessage();
+
+        assertEquals(expResult, result);
+    }
 }

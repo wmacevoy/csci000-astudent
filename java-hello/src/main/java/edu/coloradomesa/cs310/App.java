@@ -41,13 +41,17 @@ public class App {
         this.greeting = greeting;
     }
 
+    public String getMessage() {
+	return getGreeting() + " " + getWho() + "!";
+    }
+
     public static void main(String[] args) throws Exception {
         App app = new App();
         app.run();
     }
 
-    private void run() {
-        System.out.println(getGreeting() + " " + getWho() + "!");
+    public void run() {
+        System.out.println(getMessage());
     }
 
 }
