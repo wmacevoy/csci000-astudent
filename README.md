@@ -15,9 +15,10 @@ Sample github repo demonstrating how to turn in assignments to Dr. MacEvoy ( [CM
 
 | Assignment | Due Date | Done | Location | Notes |
 |-----------:|:--------:|:----:|:---------|:------|
-| 1 - C++ Hello  | 1-Jan-20 |  ☑   | [hello](https://github.com/wmacevoy/csci000-astudent/tree/master/cpp-hello) | Test C++ function with Google Test |
-| 2 - C++ Greet  | 2-Jan-20 |  ☑   | [greet](https://github.com/wmacevoy/csci000-astudent/tree/master/cpp-greet) | Test C++ class with Google Test |
-| 3 - Kattis | 3-Jan-20 |  ☐   |  n/a | Write solution to [towers](https://open.kattis.com/problems/towers) |
+| 1 - C++ Hello  | 1-Jan-20 |  ☑   | [cpp-hello](https://github.com/wmacevoy/csci000-astudent/tree/master/cpp-hello) | Test C++ function with Google Test |
+| 2 - C++ Greet  | 2-Jan-20 |  ☑   | [cpp-greet](https://github.com/wmacevoy/csci000-astudent/tree/master/cpp-greet) | Test C++ class with Google Test |
+| 3 - Java Hello  | 2-Jan-20 |  ☑   | [java-hello](https://github.com/wmacevoy/csci000-astudent/tree/master/java-hello) | Test Java with JUnit 4 |
+| 4 - Kattis | 3-Jan-20 |  ☐   |  n/a | Write solution to [towers](https://open.kattis.com/problems/towers) |
 >>>>>>> e03d1a2197dbfaa5efe58d23f4baf8f0988501c5
 
 ## References
