@@ -356,3 +356,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# Maven cache file 
+maven-cache/*
