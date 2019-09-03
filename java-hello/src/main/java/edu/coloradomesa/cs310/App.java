@@ -29,6 +29,7 @@ public class App {
      */
     public void setWho(String who) {
         this.who = who;
+        this.message = null;
     }
 
     private String greeting = "Hello";
@@ -37,12 +38,18 @@ public class App {
         return greeting;
     }
 
+    private String message = null;
+    
     public void setGreeting(String greeting) {
         this.greeting = greeting;
+        this.message = null;
     }
 
     public String getMessage() {
-	return getGreeting() + " " + getWho() + "!";
+        if (message == null) {
+            message = getGreeting() + " " + getWho() + "!";
+        }
+	return message;
     }
 
     public static void main(String[] args) throws Exception {
@@ -53,5 +60,4 @@ public class App {
     public void run() {
         System.out.println(getMessage());
     }
-
 }
