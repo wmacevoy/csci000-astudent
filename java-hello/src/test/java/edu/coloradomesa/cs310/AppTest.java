@@ -67,10 +67,10 @@ public class AppTest {
     public void testSetWho() {
         System.out.println("setWho");
         String who = "王秀英";
-        App instance = new App();
-        instance.setWho(who);
+        App app = new App();
+        app.setWho(who);
         String expResult = who;
-        String result = instance.getWho();
+        String result = app.getWho();
         assertEquals(expResult, result);
     }
 
@@ -128,7 +128,9 @@ public class AppTest {
     }
 
     /**
-     * Test of getWho method, of class App.
+     * Test of run method, of class App.
+     *
+     * Since this has side effects; it is hard to test.
      */
     @Test
     public void testRun() {
@@ -180,5 +182,58 @@ public class AppTest {
         String result = instance.getMessage();
 
         assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getWho method, of class App.
+     */
+    @Test
+    public void testGetWho() {
+        System.out.println("getWho");
+        App instance = new App();
+        String expResult = "";
+        String result = instance.getWho();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getMessage method, of class App.
+     */
+    @Test
+    public void testGetMessage() {
+        System.out.println("getMessage");
+        App instance = new App();
+        String expResult = "";
+        String result = instance.getMessage();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of playBall method, of class App.
+     */
+    @Test
+    public void testPlayBall() {
+        System.out.println("playBall");
+        App instance = new App();
+        instance.playBall();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setPlayer method, of class App.
+     */
+    @Test
+    public void testSetPlayer() {
+        System.out.println("setPlayer");
+        String player = "";
+        App instance = new App();
+        instance.setPlayer(player);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 }
