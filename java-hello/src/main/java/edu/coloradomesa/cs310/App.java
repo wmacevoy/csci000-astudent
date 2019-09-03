@@ -38,13 +38,13 @@ public class App {
         return greeting;
     }
 
-    private String message = null;
-    
     public void setGreeting(String greeting) {
         this.greeting = greeting;
         this.message = null;
     }
 
+    private String message = null;
+    
     public String getMessage() {
         if (message == null) {
             message = getGreeting() + " " + getWho() + "!";
