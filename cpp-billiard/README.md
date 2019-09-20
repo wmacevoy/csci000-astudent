@@ -29,6 +29,14 @@ make all
 bin/test_billiard
 ```
 
+![test.png](test.png)
+
+## Kattis
+
+Submitted `src/main_billiard.cpp` to kattis for the [billiard](https://open.kattis.com/problems/billiard) problem:
+
+![test.png](test.png)
+
 ## Run
 
 ```bash
