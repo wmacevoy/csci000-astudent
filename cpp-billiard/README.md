@@ -29,22 +29,19 @@ make all
 bin/test_billiard
 ```
 
-![test.png](test.png)
+![tests.png](tests.png)
 
 ## Kattis
 
 Submitted `src/main_billiard.cpp` to kattis for the [billiard](https://open.kattis.com/problems/billiard) problem:
 
-![test.png](test.png)
+![kattis.png](kattis.png)
 
 ## Run
 
 ```bash
 bin/hello
 ```
-## Clean-Build-Test Screen Capture
-
-![clean-test-build.png](clean-build-test.png)
 
 ## Docker
 
