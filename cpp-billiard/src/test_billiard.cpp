@@ -73,11 +73,11 @@ struct AppTest : ::testing::Test {
   }
 
   void assertAppInEquals(AppPtr expect, AppPtr result) {
-        ASSERT_EQ(expect->a, result->a);
-        ASSERT_EQ(expect->b, result->b);
-        ASSERT_EQ(expect->s, result->s);
-        ASSERT_EQ(expect->n, result->n);
-        ASSERT_EQ(expect->m, result->m);
+    ASSERT_EQ(expect->a, result->a);
+    ASSERT_EQ(expect->b, result->b);
+    ASSERT_EQ(expect->s, result->s);
+    ASSERT_EQ(expect->n, result->n);
+    ASSERT_EQ(expect->m, result->m);
   }
   
   void assertAppOutEquals(AppPtr expect, AppPtr result, double tolerance) {
