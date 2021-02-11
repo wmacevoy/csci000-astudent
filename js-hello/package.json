@@ -9,8 +9,7 @@
     "test": "mocha",
     "server": "http-server -a localhost -p 8080"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "chai": "*",
     "mocha": "*"
