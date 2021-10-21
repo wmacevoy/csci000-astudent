@@ -32,7 +32,7 @@ CXXFLAGS=-pthread -Iinclude -g -std=gnu++17 -fPIC
 
 include Makefile.googletest
 
-FIND_SRC ?= $(shell if [ `uname` = "Darwin" ] ; then echo find src -E ; else echo find src -regextype posix-extended ; fi)
+FIND_SRC ?= $(shell if [ `uname` = "Darwin" ] ; then echo find -E src ; else echo find src -regextype posix-extended ; fi)
 
 # all not-main and not-test source files in the src folder
 CPP_PARTS=$(shell $(FIND_SRC) -iregex '[a-z0-9].*\.(cpp)' -and -not \( -name '.*' -or -name 'main_*' -or -name 'test_*' \) )
@@ -139,4 +139,4 @@ bin/% : tmp/main_%.c.o $(PARTO)
 # generic link a test executable rule
 bin/test_% : tmp/test_%.cpp.o $(PARTO)
 	mkdir -p `dirname $@`
-	$(CXX) $(CXXFLAGS) $(GOOGLE_TEST_FLAGS) -o $@ $^ $(LDFLAGS) $(GOOGLE_TEST_LIBS) `nm -g -P $< | egrep "^main T" >/dev/null || echo $(GOOGLE_MAIN_LIBS)`
+	$(CXX) $(CXXFLAGS) $(GOOGLE_TEST_FLAGS) -o $@ $^ $(LDFLAGS) `nm -g -P $< | egrep "^_?main T" >/dev/null || echo $(GOOGLE_MAIN_LIBS)` $(GOOGLE_TEST_LIBS)

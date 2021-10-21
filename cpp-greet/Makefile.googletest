@@ -22,8 +22,8 @@ lib/googletest-$(GOOGLE_TEST_VERSION)/googletest : lib/googletest-$(GOOGLE_TEST_
 lib/libgoogletest-$(GOOGLE_TEST_VERSION).so : lib/googletest-$(GOOGLE_TEST_VERSION)/googletest
 	$(CXX) -o $@ -shared $(CXXFLAGS) $(GOOGLE_TEST_FLAGS) -Ilib/googletest-$(GOOGLE_TEST_VERSION)/googletest lib/googletest-$(GOOGLE_TEST_VERSION)/googletest/src/gtest-all.cc
 
-lib/libgoogletest_main-$(GOOGLE_TEST_VERSION).so : lib/googletest-$(GOOGLE_TEST_VERSION)/googletest
-	$(CXX) -o $@ -shared $(CXXFLAGS) $(GOOGLE_TEST_FLAGS) -Ilib/googletest-$(GOOGLE_TEST_VERSION)/googletest lib/googletest-$(GOOGLE_TEST_VERSION)/googletest/src/gtest_main.cc
+lib/libgoogletest_main-$(GOOGLE_TEST_VERSION).so : lib/googletest-$(GOOGLE_TEST_VERSION)/googletest lib/libgoogletest-$(GOOGLE_TEST_VERSION).so
+	$(CXX) -o $@ -shared $(CXXFLAGS) $(GOOGLE_TEST_FLAGS) -Ilib/googletest-$(GOOGLE_TEST_VERSION)/googletest lib/googletest-$(GOOGLE_TEST_VERSION)/googletest/src/gtest_main.cc lib/libgoogletest-$(GOOGLE_TEST_VERSION).so
 
 lib/googletest-$(GOOGLE_TEST_VERSION)/googlemock : lib/googletest-$(GOOGLE_TEST_VERSION)/download.tar.gz
 	tar -zxf lib/googletest-$(GOOGLE_TEST_VERSION)/download.tar.gz -C lib/googletest-$(GOOGLE_TEST_VERSION) --strip-components 1 googletest-release-$(GOOGLE_TEST_VERSION)/googlemock
