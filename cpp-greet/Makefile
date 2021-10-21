@@ -27,29 +27,41 @@
 #       make mains
 
 # c++ compile flags
-CXXFLAGS=-pthread -Iinclude -g -O2 -std=c++14 -fPIC
+#CXXFLAGS=-pthread -Iinclude -g -O2 -std=c++17 -fPIC
+CXXFLAGS=-pthread -Iinclude -g -std=gnu++17 -fPIC
 
 include Makefile.googletest
 
+FIND_SRC ?= $(shell if [ `uname` = "Darwin" ] ; then echo find src -E ; else echo find src -regextype posix-extended ; fi)
+
 # all not-main and not-test source files in the src folder
-PARTS=$(shell find src -name '*.cpp' -and -not \( -name '.*' -or -name 'main_*' -or -name 'test_*' \) )
+CPP_PARTS=$(shell $(FIND_SRC) -iregex '[a-z0-9].*\.(cpp)' -and -not \( -name '.*' -or -name 'main_*' -or -name 'test_*' \) )
+C_PARTS=$(shell $(FIND_SRC) -iregex '[a-z0-9].*\.(c)' -and -not \( -name '.*' -or -name 'main_*' -or -name 'test_*' \) )
 # src/XXXX.cpp -> tmp/XXXX.cpp.o object files
-PARTO=$(patsubst src/%.cpp,tmp/%.cpp.o,$(PARTS))
+CPP_PARTO=$(patsubst src/%.cpp,tmp/%.cpp.o,$(CPP_PARTS))
+C_PARTO=$(patsubst src/%.cpp,tmp/%.c.o,$(C_PARTS))
+PARTO=$(CPP_PARTO) $(C_PARTO)
 
 # program main source files in src
-MAINS=$(shell find src -name 'main_*.cpp')
+CPP_MAINS=$(shell find src -name 'main_*.cpp')
+C_MAINS=$(shell find src -name 'main_*.c')
 
 # src/main_XXXX.cpp -> bin/XXXX executables
-MAINX=$(patsubst src/main_%.cpp,bin/%,$(MAINS))
+CPP_MAINX=$(patsubst src/main_%.cpp,bin/%,$(CPP_MAINS))
+C_MAINX=$(patsubst src/main_%.cpp,bin/%,$(C_MAINS))
 
+MAINX = $(CPP_MAINX) $(C_MAINX) 
 ALL += $(MAINX)
 
 # test source files in src
-TESTS=$(shell find src -name 'test_*.cpp')
+CPP_TESTS=$(shell find src -name 'test_*.cpp')
+C_TESTS=$(shell find src -name 'test_*.c')
 
 # src/test_XXXX.cpp -> bin/test_XXXX test executables
-TESTX=$(patsubst src/test_%.cpp,bin/test_%,$(TESTS))
+CPP_TESTX=$(patsubst src/test_%.cpp,bin/test_%,$(CPP_TESTS))
+C_TESTX=$(patsubst src/test_%.c,bin/test_%,$(C_TESTS))
 
+TESTX = $(CPP_TESTX) $(C_TESTX)
 ALL += $(TESTX)
 
 .PHONY: all
@@ -71,15 +83,26 @@ tmp/test_%.cpp.d: src/test_%.cpp
 	mkdir -p `dirname $@`
 	$(CXX) $(CXXFLAGS) $(GOOGLE_TEST_FLAGS) -MM -MT '$(patsubst src/%.cpp,tmp/%.cpp.o,$<)' $< > $@
 
+# use compiler to automatically discover #include - dependencies... for test
+tmp/test_%.c.d: src/test_%.c
+	mkdir -p `dirname $@`
+	$(CC) $(CFLAGS) $(GOOGLE_TEST_FLAGS) -MM -MT '$(patsubst src/%.c,tmp/%.c.o,$<)' $< > $@
+
 # use compiler to automatically discover #include - dependencies...
 tmp/%.cpp.d: src/%.cpp
 	mkdir -p `dirname $@`
 	$(CXX) $(CXXFLAGS) -MM -MT '$(patsubst src/%.cpp,tmp/%.cpp.o,$<)' $< > $@
 
+# use compiler to automatically discover #include - dependencies...
+tmp/%.c.d: src/%.cpp
+	mkdir -p `dirname $@`
+	$(CC) $(CFLAGS) -MM -MT '$(patsubst src/%.cpp,tmp/%.cpp.o,$<)' $< > $@
+
 # use (and maybe update) dependency rules unless I am cleaning or makeing googletests
 ifneq (clean,$(MAKECMDGOALS))
 ifneq (googletest,$(MAKECMDGOALS))
--include $(patsubst src/%.cpp,tmp/%.cpp.d,$(PARTS) $(MAINS) $(TESTS))
+-include $(patsubst src/%.cpp,tmp/%.cpp.d,$(CPP_PARTS) $(CPP_MAINS) $(CPP_TESTS))
+-include $(patsubst src/%.c,tmp/%.c.d,$(C_PARTS) $(C_MAINS) $(C_TESTS))
 endif
 endif
 
@@ -88,18 +111,32 @@ tmp/test_%.cpp.o: src/test_%.cpp
 	mkdir -p `dirname $@`
 	$(CXX) $(CXXFLAGS) $(GOOGLE_TEST_FLAGS) -c -o $@ $<
 
+# generic compile a c test file rule
+tmp/test_%.c.o: src/test_%.c
+	mkdir -p `dirname $@`
+	$(CC) $(CFLAGS) $(GOOGLE_TEST_FLAGS) -c -o $@ $<
+
 # generic compile a c++ source file rule
 tmp/%.cpp.o: src/%.cpp
 	mkdir -p `dirname $@`
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
+# generic compile a c source file rule
+tmp/%.c.o: src/%.c
+	mkdir -p `dirname $@`
+	$(CC $(CFLAGS) -c -o $@ $<
 
 # generic link an executable rule
 bin/% : tmp/main_%.cpp.o $(PARTO) 
 	mkdir -p `dirname $@`
 	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
 
+# generic link an executable rule
+bin/% : tmp/main_%.c.o $(PARTO) 
+	mkdir -p `dirname $@`
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+
 # generic link a test executable rule
 bin/test_% : tmp/test_%.cpp.o $(PARTO)
 	mkdir -p `dirname $@`
-	$(CXX) $(CXXFLAGS) $(GOOGLE_TEST_FLAGS) -o $@ $^ $(LDFLAGS) $(GOOGLE_TEST_LIBS)
+	$(CXX) $(CXXFLAGS) $(GOOGLE_TEST_FLAGS) -o $@ $^ $(LDFLAGS) $(GOOGLE_TEST_LIBS) `nm -g -P $< | egrep "^main T" >/dev/null || echo $(GOOGLE_MAIN_LIBS)`
