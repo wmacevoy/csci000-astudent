@@ -34,8 +34,3 @@ TEST(Greeter, GreetAlice) {
   greeter.greet(result);
   ASSERT_EQ(expect.str(),result.str());
 }
-
-int main(int argc, char** argv) {
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
-}

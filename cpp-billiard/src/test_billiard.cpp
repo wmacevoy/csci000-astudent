@@ -177,8 +177,3 @@ TEST_F(AppTest,Run) {
   std::string result = ossOutput.str();
   ASSERT_EQ(expect, result);
 }
-
-int main(int argc, char** argv) {
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
-}
