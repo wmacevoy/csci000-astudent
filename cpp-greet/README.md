@@ -49,8 +49,8 @@ To create a reproducible build (advanced) and you have docker installed, you can
 
 ```bash
 docker build -t cpp-greet .
-docker run -i --rm -t cpp-greet test_greet # test
-docker run -i --rm -t cpp-greet greet # run
+docker run --rm cpp-greet test_greet # test
+docker run --rm cpp-greet greet # run
 ```
 
 ## References
