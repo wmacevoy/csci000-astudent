@@ -2,16 +2,18 @@
 
 This makes a greet function that can return greeting messages.
 
-The makefile is fairly generic, and, if you structure your project as
-
+The makefile is fairly generic, and, if you structure your project as.
 ```
 src/*.cpp
 include/*.h
-tmp/*.o - temporary object files
-lib/*.so - external shared libraries
-bin/XXXX - programs built from src/main_XXXX.cpp
-bin/test_XXXX - tests built from src/test_XXXX.cpp
+tmp/<arch>/*.o - temporary object files
+lib/<arch>/*.so - external shared libraries
+bin/<arch>/XXXX - programs built from src/main_XXXX.cpp
+bin/<arch>/test_XXXX - tests built from src/test_XXXX.cpp
 ```
+
+Here, <arch> is "$(uname -s)-$(uname -m)" like Darwin-x86_64.  This way the
+same folder can support multiple architectures.
 
 You can use make clean/all without modifying Makefile and Makefile.googletest
 
@@ -26,13 +28,15 @@ make all
 ## Test
 
 ```bash
-bin/test_hello
+./test_all
 ```
 
 ## Run
 
+The "uname" business makes things work even if you have muliple architectures (like with docker below).
+
 ```bash
-bin/hello
+./bin/$(uname -s)-$(uname -m)/hello
 ```
 ## Clean-Build-Test Screen Capture
 
@@ -40,12 +44,11 @@ bin/hello
 
 ## Docker
 
-To create a reproducible build (advanced) and you have docker installed, you can do the following:
+To create a reproducible build (advanced) and you have docker installed, you can do the following (use a git-bash shell in windows, WSL may work):
 
 ```bash
-docker build -t cpp-hello .
-docker run --rm -t cpp-hello test_hello # test
-docker run --rm -t cpp-hello hello # run
+./run test_all # test
+./run hello # run
 ```
 
 ## References

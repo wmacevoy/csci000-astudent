@@ -1,36 +1,57 @@
 # default google test version
 
 CURL ?= curl
-GOOGLE_TEST_VERSION ?= 1.11.0
+GOOGLE_TEST_UNAME_M := $(shell uname -m)
+GOOGLE_TEST_UNAME_S := $(shell uname -s)
+GOOGLE_TEST_OS_ARCH := $(GOOGLE_TEST_UNAME_S)-$(GOOGLE_TEST_UNAME_M)
+GOOGLE_TEST_VERSION := 1.11.0
 
-GOOGLE_TEST_FLAGS += -Ilib/googletest-$(GOOGLE_TEST_VERSION)/googletest/include
-GOOGLE_TEST_FLAGS += -Ilib/googletest-$(GOOGLE_TEST_VERSION)/googlemock/include
+GOOGLE_TEST_DIR := lib/$(GOOGLE_TEST_OS_ARCH)/googletest-$(GOOGLE_TEST_VERSION)
 
-# link flags
-GOOGLE_TEST_LIBS += lib/libgooglemock-$(GOOGLE_TEST_VERSION).so
-GOOGLE_TEST_LIBS += lib/libgoogletest-$(GOOGLE_TEST_VERSION).so
-GOOGLE_MAIN_LIBS += lib/libgoogletest_main-$(GOOGLE_TEST_VERSION).so
+GOOGLE_TEST_SUBDIR := $(GOOGLE_TEST_DIR)/googletest
+GOOGLE_MOCK_SUBDIR := $(GOOGLE_TEST_DIR)/googlemock
 
-lib/googletest-$(GOOGLE_TEST_VERSION)/download.tar.gz:
-	mkdir -p lib/googletest-$(GOOGLE_TEST_VERSION)
-	test -f lib/googletest-$(GOOGLE_TEST_VERSION)/download.tar.gz || $(CURL) -L -o lib/googletest-$(GOOGLE_TEST_VERSION)/download.tar.gz https://github.com/google/googletest/archive/release-$(GOOGLE_TEST_VERSION).tar.gz
+GOOGLE_TEST_TAR := $(GOOGLE_TEST_DIR)/download.tar.gz
 
-lib/googletest-$(GOOGLE_TEST_VERSION)/googletest : lib/googletest-$(GOOGLE_TEST_VERSION)/download.tar.gz
-	tar -zxf lib/googletest-$(GOOGLE_TEST_VERSION)/download.tar.gz -C lib/googletest-$(GOOGLE_TEST_VERSION) --strip-components 1 googletest-release-$(GOOGLE_TEST_VERSION)/googletest
-	touch lib/googletest-$(GOOGLE_TEST_VERSION)/googletest
+GOOGLE_TEST_INC := $(GOOGLE_TEST_SUBDIR)/include
+GOOGLE_MOCK_INC := $(GOOGLE_MOCK_SUBDIR)/include
 
-lib/libgoogletest-$(GOOGLE_TEST_VERSION).so : lib/googletest-$(GOOGLE_TEST_VERSION)/googletest
-	$(CXX) -o $@ -shared $(CXXFLAGS) $(GOOGLE_TEST_FLAGS) -Ilib/googletest-$(GOOGLE_TEST_VERSION)/googletest lib/googletest-$(GOOGLE_TEST_VERSION)/googletest/src/gtest-all.cc
+GOOGLE_TEST_SRC := $(GOOGLE_TEST_SUBDIR)/src/gtest-all.cc
+GOOGLE_MOCK_SRC := $(GOOGLE_MOCK_SUBDIR)/src/gmock-all.cc
+GOOGLE_MAIN_SRC := $(GOOGLE_TEST_SUBDIR)/src/gtest_main.cc
 
-lib/libgoogletest_main-$(GOOGLE_TEST_VERSION).so : lib/googletest-$(GOOGLE_TEST_VERSION)/googletest lib/libgoogletest-$(GOOGLE_TEST_VERSION).so
-	$(CXX) -o $@ -shared $(CXXFLAGS) $(GOOGLE_TEST_FLAGS) -Ilib/googletest-$(GOOGLE_TEST_VERSION)/googletest lib/googletest-$(GOOGLE_TEST_VERSION)/googletest/src/gtest_main.cc lib/libgoogletest-$(GOOGLE_TEST_VERSION).so
+GOOGLE_TEST_FLAGS := -I$(GOOGLE_TEST_INC) -I$(GOOGLE_MOCK_INC)
 
-lib/googletest-$(GOOGLE_TEST_VERSION)/googlemock : lib/googletest-$(GOOGLE_TEST_VERSION)/download.tar.gz
-	tar -zxf lib/googletest-$(GOOGLE_TEST_VERSION)/download.tar.gz -C lib/googletest-$(GOOGLE_TEST_VERSION) --strip-components 1 googletest-release-$(GOOGLE_TEST_VERSION)/googlemock
-	touch lib/googletest-$(GOOGLE_TEST_VERSION)/googlemock
+GOOGLE_TEST_LIB  := lib/$(GOOGLE_TEST_OS_ARCH)/libgoogletest-$(GOOGLE_TEST_VERSION).so
+GOOGLE_MOCK_LIB  := lib/$(GOOGLE_TEST_OS_ARCH)/libgooglemock-$(GOOGLE_TEST_VERSION).so
+GOOGLE_MAIN_LIB  := lib/$(GOOGLE_TEST_OS_ARCH)/libgoogletest_main-$(GOOGLE_TEST_VERSION).so
 
-lib/libgooglemock-$(GOOGLE_TEST_VERSION).so : lib/googletest-$(GOOGLE_TEST_VERSION)/googlemock lib/libgoogletest-$(GOOGLE_TEST_VERSION).so
-	$(CXX) -o $@ -shared $(CXXFLAGS) $(GOOGLE_TEST_FLAGS) -Ilib/googletest-$(GOOGLE_TEST_VERSION)/googlemock lib/googletest-$(GOOGLE_TEST_VERSION)/googlemock/src/gmock-all.cc lib/libgoogletest-$(GOOGLE_TEST_VERSION).so
+GOOGLE_TEST_LIBS  := $(GOOGLE_TEST_LIB) $(GOOGLE_MOCK_LIB)
+GOOGLE_MAIN_LIBS  := $(GOOGLE_MAIN_LIB)
+
+GOOGLE_TEST_CXXFLAGS := $(CXXFLAGS) -fPIC
 
 .PHONY: googletest
-googletest : lib/libgoogletest-$(GOOGLE_TEST_VERSION).so lib/libgoogletest_main-$(GOOGLE_TEST_VERSION).so lib/libgooglemock-$(GOOGLE_TEST_VERSION).so
+googletest : $(GOOGLE_TEST_LIB) $(GOOGLE_MOCK_LIB) $(GOOGLE_MAIN_LIB)
+
+$(GOOGLE_TEST_TAR): $(GOOGLE_TEST_DIR)
+	test -f "$@" || mkdir -p $$(dirname "$@") && $(CURL) -L -o "$@" https://github.com/google/googletest/archive/release-$(GOOGLE_TEST_VERSION).tar.gz
+	touch "$@"
+
+$(GOOGLE_TEST_SRC) : $(GOOGLE_TEST_TAR)
+	tar -zxf $(GOOGLE_TEST_TAR) -C $(GOOGLE_TEST_DIR) --strip-components 1 googletest-release-$(GOOGLE_TEST_VERSION)/googletest
+	touch "$@"
+
+$(GOOGLE_MOCK_SRC) : $(GOOGLE_TEST_TAR)
+	tar -zxf $(GOOGLE_TEST_TAR) -C $(GOOGLE_TEST_DIR) --strip-components 1 googletest-release-$(GOOGLE_TEST_VERSION)/googlemock
+	touch "$@"
+
+$(GOOGLE_TEST_LIB) : $(GOOGLE_TEST_SRC)
+	$(CXX) -o $@ -shared $(GOOGLE_TEST_CXXFLAGS) $(GOOGLE_TEST_FLAGS) -I$(GOOGLE_TEST_SUBDIR) $<
+
+$(GOOGLE_MOCK_LIB) : $(GOOGLE_MOCK_SRC) $(GOOGLE_TEST_LIB)
+	$(CXX) -o $@ -shared $(GOOGLE_TEST_CXXFLAGS) $(GOOGLE_TEST_FLAGS) -I$(GOOGLE_MOCK_SUBDIR) $< $(GOOGLE_TEST_LIB)
+
+$(GOOGLE_MAIN_LIB) : $(GOOGLE_MAIN_SRC) $(GOOGLE_TEST_LIB)
+	$(CXX) -o $@ -shared $(GOOGLE_TEST_CXXFLAGS) $(GOOGLE_TEST_FLAGS) -I$(GOOGLE_TEST_SUBDIR) $< $(GOOGLE_TEST_LIB)
+
