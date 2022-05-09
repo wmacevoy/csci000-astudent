@@ -133,7 +133,7 @@ public class AppTest {
      * Since this has side effects; it is hard to test.
      */
     @Test
-    public void testRun() {
+    public void testRun() throws java.io.UnsupportedEncodingException {
         System.out.println("run");
         String who = "王秀英";
         String greeting = "مرحبا";
@@ -146,7 +146,7 @@ public class AppTest {
         String expResult = message + System.lineSeparator();
         PrintStream sysOut = System.out;
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        PrintStream testOut = new PrintStream(buffer);
+        PrintStream testOut = new PrintStream(buffer,true,"UTF-8");
         try {
             System.setOut(testOut);
             instance.run();
