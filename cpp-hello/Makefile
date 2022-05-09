@@ -65,9 +65,12 @@ C_MAINS:=$(shell find src -name 'main_*.c')
 # src/main_XXXX.cpp -> bin/XXXX executables
 CPP_MAINX:=$(patsubst src/main_%.cpp,$(BIN)/%,$(CPP_MAINS))
 C_MAINX:=$(patsubst src/main_%.cpp,$(BIN)/%,$(C_MAINS))
+CPP_MAINZ:=$(patsubst src/main_%.cpp,bin/%,$(CPP_MAINS))
+C_MAINZ:=$(patsubst src/main_%.cpp,bin/%,$(C_MAINS))
 
-MAINX := $(CPP_MAINX) $(C_MAINX) 
-ALL += $(MAINX)
+MAINX := $(CPP_MAINX) $(C_MAINX)
+MAINZ := $(CPP_MAINZ) $(C_MAINZ)
+ALL += $(MAINX) $(MAINZ)
 
 # test source files in src
 CPP_TESTS:=$(shell find src -name 'test_*.cpp')
@@ -76,19 +79,21 @@ C_TESTS:=$(shell find src -name 'test_*.c')
 # src/test_XXXX.cpp -> bin/test_XXXX test executables
 CPP_TESTX:=$(patsubst src/test_%.cpp,$(BIN)/test_%,$(CPP_TESTS))
 C_TESTX:=$(patsubst src/test_%.c,$(BIN)/test_%,$(C_TESTS))
+CPP_TESTZ:=$(patsubst src/test_%.cpp,bin/test_%,$(CPP_TESTS))
+C_TESTZ:=$(patsubst src/test_%.c,bin/test_%,$(C_TESTS))
 
 TESTX = $(CPP_TESTX) $(C_TESTX)
-ALL += $(TESTX)
+TESTZ = $(CPP_TESTZ) $(C_TESTZ)
+ALL += $(TESTX) $(TESTZ)
 
 .PHONY: all
-all : $(GOOGLE_TEST_LIBS) $(GOOGLE_MAIN_LIBS) mains tests
+all : googletest mains tests
 
 .PHONY: mains
-mains : $(MAINX)
-$(info xx $(MAINX))
+mains : $(MAINX) $(MAINZ)
 
 .PHONY: tests
-tests : $(TESTX)
+tests : $(TESTX) $(TESTZ)
 
 .PHONY: clean
 clean :
@@ -152,12 +157,13 @@ $(BIN)/% : $(TMP)/main_%.cpp.o $(PARTO)
 $(BIN)/% : $(TMP)/main_%.c.o $(PARTO)
 	mkdir -p `dirname $@`
 	$(CXX) $(CXXFLAGS) -o $@ $< $(PARTO) $(LDFLAGS)
-	echo '#!/bin/bash\nexec "$$( cd -- "$$( dirname -- "$${BASH_SOURCE[0]}" )" &> /dev/null && pwd )/$$(uname -s)-$$(uname -m)/$*" "$$@"\n' > bin/"$*"
-	chmod +x bin/"$*"
 
 # generic link a test executable rule
 $(BIN)/test_% : $(TMP)/test_%.cpp.o $(PARTO) $(GOOGLE_TEST_LIBS) $(GOOGLE_MAIN_LIBS)
 	mkdir -p `dirname $@`
 	$(CXX) $(CXXFLAGS) $(GOOGLE_TEST_FLAGS) -o $@ $< $(PARTO) $(LDFLAGS) `nm -g -P $< | egrep "^_?main T" >/dev/null || echo $(GOOGLE_MAIN_LIBS)` $(GOOGLE_TEST_LIBS)
-	echo '#!/bin/bash\nexec "$$( cd -- "$$( dirname -- "$${BASH_SOURCE[0]}" )" &> /dev/null && pwd )/$$(uname -s)-$$(uname -m)/test_$*" "$$@"\n' > bin/"test_$*"
-	chmod +x bin/"test_$*"
+
+# architecture indepdendent script to run architecture dependent executuable
+bin/% : $(BIN)/%
+	echo '#!/bin/bash\nexec "$$( cd -- "$$( dirname -- "$${BASH_SOURCE[0]}" )" &> /dev/null && pwd )/$$(uname -s)-$$(uname -m)/$*" "$$@"\n' > bin/"$*"
+	chmod +x bin/"$*"

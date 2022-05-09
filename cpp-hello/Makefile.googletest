@@ -34,6 +34,9 @@ GOOGLE_TEST_CXXFLAGS := $(CXXFLAGS) -fPIC
 .PHONY: googletest
 googletest : $(GOOGLE_TEST_LIB) $(GOOGLE_MOCK_LIB) $(GOOGLE_MAIN_LIB)
 
+
+$(GOOGLE_TEST_DIR) :
+	mkdir -p "$@"
 $(GOOGLE_TEST_TAR): $(GOOGLE_TEST_DIR)
 	test -f "$@" || mkdir -p $$(dirname "$@") && $(CURL) -L -o "$@" https://github.com/google/googletest/archive/release-$(GOOGLE_TEST_VERSION).tar.gz
 	touch "$@"
@@ -55,3 +58,5 @@ $(GOOGLE_MOCK_LIB) : $(GOOGLE_MOCK_SRC) $(GOOGLE_TEST_LIB)
 $(GOOGLE_MAIN_LIB) : $(GOOGLE_MAIN_SRC) $(GOOGLE_TEST_LIB)
 	$(CXX) -o $@ -shared $(GOOGLE_TEST_CXXFLAGS) $(GOOGLE_TEST_FLAGS) -I$(GOOGLE_TEST_SUBDIR) $< $(GOOGLE_TEST_LIB)
 
+.PHONY: googletest
+googletest: $(GOOGLE_TEST_LIB) $(GOOGLE_MOCK_LIB) $(GOOGLE_MAIN_LIB)
