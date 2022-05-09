@@ -6,18 +6,12 @@ This a Netbeans/Maven "hello world" program tested with JUnit 4
 
 ## docker 
 
-### create docker
+### build container & app
+./run mvn compile
 
-```bash
-docker build -t java-hello .
-```
+### test
+./run mvn test
 
-### compile maven project
-```bash
-docker run --rm -t -v `pwd`/maven-cache:/root/.m2 java-hello mvn compile
-```
+### interactive shell in container (control-d or exit to exit):
+./run
 
-### test maven project
-```bash
-docker run --rm -t -v `pwd`/maven-cache:/root/.m2 java-hello mvn test
-```
