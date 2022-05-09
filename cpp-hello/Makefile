@@ -1,4 +1,3 @@
-
 #
 # Generic gcc/llvm c++ compiler wrapper for make in osx/linux/wsl
 # this is a fairly complex makefile, but it is made to
@@ -95,6 +94,10 @@ mains : $(MAINX) $(MAINZ)
 .PHONY: tests
 tests : $(TESTX) $(TESTZ)
 
+.PHONY: test
+test:
+	./test_all
+
 .PHONY: clean
 clean :
 	/bin/rm -rf $(TMP)/* $(BIN)/* $(LIB)/*.so
@@ -167,3 +170,4 @@ $(BIN)/test_% : $(TMP)/test_%.cpp.o $(PARTO) $(GOOGLE_TEST_LIBS) $(GOOGLE_MAIN_L
 bin/% : $(BIN)/%
 	echo '#!/bin/bash\nexec "$$( cd -- "$$( dirname -- "$${BASH_SOURCE[0]}" )" &> /dev/null && pwd )/$$(uname -s)-$$(uname -m)/$*" "$$@"\n' > bin/"$*"
 	chmod +x bin/"$*"
+
