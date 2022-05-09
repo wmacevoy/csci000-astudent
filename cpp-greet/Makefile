@@ -26,32 +26,40 @@
 #       make tests
 #       make mains
 
-# c++ compile flags
-#CXXFLAGS=-pthread -Iinclude -g -O2 -std=c++17 -fPIC
-
-UNAME_M := $(shell uname -m)
+# system-machine specifications
 UNAME_S := $(shell uname -s)
+UNAME_M := $(shell uname -m)
 OS_ARCH ?= $(UNAME_S)-$(UNAME_M)
+
+# architecture-dependent build tmp/bin/lib directories
 
 BIN := bin/$(OS_ARCH)
 TMP := tmp/$(OS_ARCH)
 LIB := lib/$(OS_ARCH)
 
-ifeq "$(UNAME_S)" "Darwin"
-CXXSTD:=gnu++2a
-else
-CXXSTD:=gnu++20
-endif
+# available standards
+CXXSTDS := g++20 c++20 g++2a c++2a g++17 c++17
+
+# choose first CXXSTD that the compiler accepts
+CXXSTD := $(shell for std in $(CXXSTDS) ; do if echo "void test();" | $(CXX) -x c++ -E -std=$$std - >/dev/null 2>&1 ; then echo $$std ; break ; fi ; done)
 
 CXXFLAGS:=-pthread -Iinclude -g -std=${CXXSTD} -fPIC
 
 include Makefile.googletest
 
-FIND_SRC ?= $(shell if [ `uname` = "Darwin" ] ; then echo find -E src ; else echo find src -regextype posix-extended ; fi)
+#
+# find options are different on darwin
+#
+ifeq "$(UNAME_S)" "Darwin"
+  FIND_SRC ?= find -E src
+else
+  FIND_SRC ?= find src -regextype posix-extended
+endif
 
 # all not-main and not-test source files in the src folder
 CPP_PARTS:=$(shell $(FIND_SRC) -iregex '[a-z0-9].*\.(cpp)' -and -not \( -name '.*' -or -name 'main_*' -or -name 'test_*' \) )
 C_PARTS:=$(shell $(FIND_SRC) -iregex '[a-z0-9].*\.(c)' -and -not \( -name '.*' -or -name 'main_*' -or -name 'test_*' \) )
+
 # src/XXXX.cpp -> tmp/XXXX.cpp.o object files
 CPP_PARTO:=$(patsubst src/%.cpp,$(TMP)/%.cpp.o,$(CPP_PARTS))
 C_PARTO:=$(patsubst src/%.cpp,$(TMP)/%.c.o,$(C_PARTS))
