@@ -7,7 +7,7 @@
   "main": "main.mjs",
   "scripts": {
       "test": "mocha",
-      "server": "light-server -s . -p 8080"
+      "server": "light-server -s . -p 8000"
   },
   "dependencies": {},
   "devDependencies": {

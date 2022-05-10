@@ -1,40 +1,43 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Hello Tests</title>
-    <link rel="stylesheet" href="node_modules/mocha/mocha.css">
-  </head>
-  <body>
-    <div id="mocha"></div>
-    <script src="node_modules/mocha/mocha.js"></script>
-    <script src="node_modules/chai/chai.js"></script>
-    <script>
-      const assert = chai.assert;
-      const expect = chai.expect;
-      const should = chai.should;
-      
-      mocha.setup('bdd');
 
-      # async load hello so you can use it in the console...
-      var hello = null;
-      import('./hello.mjs').then(mod => { hello = mod; mocha.run(); });
+<head>
+  <title>Hello Tests</title>
+  <link rel="stylesheet" href="node_modules/mocha/mocha.css">
+</head>
 
-      describe('Hello', function() {
-	  describe('#message()', function() {
-	      it('should be "Hello, World!" when with World', function(){
-		  let name = "World";
-		  let expect = "Hello, World!";
-		  let result = hello.hello(name);
-		  assert.equal(expect,result);
-	      });
-	      it('should be "Hello, Alice!" when with Alice', function(){
-		  let name = "Alice";
-		  let expect = "Hello, Alice!";
-		  let result = hello.hello(name);
-		  assert.equal(expect,result);
-	      });
-	  });
+<body>
+  <div id="mocha"></div>
+  <script src="node_modules/mocha/mocha.js"></script>
+  <script src="node_modules/chai/chai.js"></script>
+  <script>
+    const assert = chai.assert;
+    const expect = chai.expect;
+    const should = chai.should;
+
+    mocha.setup('bdd');
+
+    // async load hello so you can use hello in the console...
+    var hello = null;
+    import('./hello.mjs').then(mod => { hello = mod; mocha.run(); });
+
+    describe('Hello', function () {
+      describe('#message()', function () {
+        it('should be "Hello, World!" when with World', function () {
+          let name = "World";
+          let expect = "Hello, World!";
+          let result = hello.hello(name);
+          assert.equal(expect, result);
+        });
+        it('should be "Hello, Alice!" when with Alice', function () {
+          let name = "Alice";
+          let expect = "Hello, Alice!";
+          let result = hello.hello(name);
+          assert.equal(expect, result);
+        });
       });
-    </script>
-  </body>
+    });
+  </script>
+</body>
+
 </html>

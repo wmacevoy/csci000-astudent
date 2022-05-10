@@ -34,10 +34,10 @@ HOST_DIR="$(winpath "$SCRIPT_DIR")"
 GUEST_DIR=/app
 
 # Host (exposed) port view web server on localhost:port
-HOST_PORT=8080
+HOST_PORT=8000
 
 # Guest (container) port
-GUEST_PORT=8080
+GUEST_PORT=8000
 
 if [ ! -f Dockerfile ]
 then
