@@ -1,5 +1,14 @@
-FROM node:12
-WORKDIR /usr/src/myapp
-COPY . /usr/src/myapp/
-RUN npm install
-CMD [ "node" ]
+FROM node:18-bullseye
+
+RUN apt-get update \
+ && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    				   time build-essential gdb cmake git nano \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+EXPOSE 8080
+
+RUN echo  export PATH='"'/app/bin:/app/bin/$(uname -s)-$(uname -m):/app/node_modules/.bin:/app:'${PATH}''"' >> /root/.bashrc
+ENTRYPOINT ["/bin/bash","-i","-c","\"$@\"","--"]
+

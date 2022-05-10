@@ -6,12 +6,13 @@
   "license": "MIT",
   "main": "main.mjs",
   "scripts": {
-    "test": "mocha",
-    "server": "http-server -a localhost -p 8080"
+      "test": "mocha",
+      "server": "light-server -s . -p 8080"
   },
   "dependencies": {},
   "devDependencies": {
-    "chai": "*",
-    "mocha": "^9.2.0"
+      "chai": "*",
+      "mocha": "*",
+      "light-server": "*"
   }
 }
