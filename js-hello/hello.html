@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello Tests</title>
+    <link rel="stylesheet" href="node_modules/mocha/mocha.css">
+  </head>
+  <body>
+    <div id="mocha"></div>
+    <script src="node_modules/mocha/mocha.js"></script>
+    <script src="node_modules/chai/chai.js"></script>
+    <script>mocha.setup('bdd')</script>
+    <script type="module">
+
+      const assert = chai.assert;
+      const expect = chai.expect;
+      const should = chai.should;
+      
+      import { hello } from './hello.mjs';
+    
+      describe('Hello', function() {
+	  describe('#message()', function() {
+	      it('should be "Hello, World!" when with World', function(){
+		  let name = "World";
+		  let expect = "Hello, World!";
+		  let result = hello(name);
+		  assert.equal(expect,result);
+	      });
+	      it('should be "Hello, Alice!" when with Alice', function(){
+		  let name = "Alice";
+		  let expect = "Hello, Alice!";
+		  let result = hello(name);
+		  assert.equal(expect,result);
+	      });
+	  });
+      });
+      
+      mocha.run();
+    </script>
+  </body>
+</html>

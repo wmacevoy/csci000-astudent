@@ -1,5 +1,6 @@
-function helloMessage(name) {
+export function hello(name) {
     return "Hello, " + name + "!";
 }
 
-const hello = { 'helloMessage': helloMessage };
+export default { hello }
+
