@@ -1,7 +1,11 @@
-FROM gcc:11.2.0
+FROM debian:bullseye
+RUN apt-get update \
+ && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    				   time build-essential gdb cmake git nano \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update && apt-get install -y cmake time build-essential gdb
 WORKDIR /app
 RUN echo  export PATH='"'/app/bin/$(uname -s)-$(uname -m):/app:'${PATH}''"' >> /root/.bashrc
+ENTRYPOINT ["/bin/bash","-i","-c","\"$@\"","--"]
 
-CMD [ "/bin/bash" "-i" ]
