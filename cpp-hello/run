@@ -53,11 +53,13 @@ echo "docker run '$DOCKER_TAG' (mounting host '$HOST_DIR' as '$GUEST_DIR'): " "$
 if [ $# -gt 0 ]
 then
     docker run -it --rm \
-	   -v "$HOST_DIR:$GUEST_DIR" "$DOCKER_TAG" \
-	   /bin/bash -i -c exec "$@"
+	   -v "$HOST_DIR:$GUEST_DIR" \
+	   "$DOCKER_TAG" \
+	   "$@"
 else
     echo "Type CTRL-D or exit to exit the interactive shell"
     docker run -it --rm \
-	   -v "$HOST_DIR:$GUEST_DIR" "$DOCKER_TAG" \
+	   -v "$HOST_DIR:$GUEST_DIR" \
+	   "$DOCKER_TAG" \
 	   /bin/bash -i
 fi
