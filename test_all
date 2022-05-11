@@ -1,0 +1,42 @@
+#!/bin/bash
+
+run_in_mode() {
+  mode=$1
+  shift
+  if [ $mode = "local" ]
+  then
+    echo "@local$(pwd)> $@"
+    "$@"
+  else
+    echo "@container$(pwd)> $@"
+    ./run "$@"
+  fi
+}
+
+test_project() {
+  for dir in "$@"
+  do
+    pushd "$dir" || ( echo "could not cd into $dir" && exit 1 )
+    echo "testing $dir..."
+    for mode in local container
+    do
+      if ! run_in_mode $mode make clean
+      then
+         echo "failed" && exit 1
+      fi
+      if ! run_in_mode $mode make all
+      then
+         echo "failed" && exit 1
+      fi
+      if ! run_in_mode $mode make test
+      then
+         echo "failed" && exit 1
+      fi
+    done
+  done
+}
+
+for dockerfile in */Dockerfile
+do
+  test_project $(dirname "$dockerfile")
+done
