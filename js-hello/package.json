@@ -7,7 +7,8 @@
   "main": "main.mjs",
   "scripts": {
       "test": "mocha",
-      "server": "light-server -s . -p 8000"
+      "server": "light-server -s . -p 8000",
+      "clean": "/bin/rm -rf .cache .tmp lib build"
   },
   "dependencies": {},
   "devDependencies": {

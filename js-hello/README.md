@@ -1,32 +1,30 @@
 # Hello
 
-Make a hello function that can return greeting messages.  The project structure is to have the functionality in the `hello` directory, and the corresponding tests in `hellotest`
+The hello module (in hello.mjs) defines a function that creates greeting messages.
 
-```
-*.js
+- `hello.html` --- wrapper to load module so that hello module it loaded and local mocha/chai tests are executed.  `hello` is available in the console for debugging.  For cross-site scripting protection this must be delivered via a web server via `npm run server` or `yarn run server`.  (probably in a container, ./run npm run server).  After the server is running, you can open `http://localhost:8000/hello.html` to locally run/debug.
+
+- `hello.mjs`  --- hello module that defines and exports hello function.
+
+- `test/hellotest.mjs` --- tests that are run on the server through `npm test` (probably in a container, ./run npm test).
+
+![browser.png](browser.png)
+
+## Build
+
+```bash
+make all
 ```
 
 ## Test
 
 ```bash
-test/*test.js
+make test
 ```
-## Clean-Build-Test Screen Capture
 
-![run-test.png](run-test.png)
+![server.png](server.png)
 
 ## Docker
 
-To create a reproducible build (advanced) and you have docker installed, you can do the following:
-
-```bash
-docker build -t js-hello .
-docker run -i --rm -t js-hello npm test # test
-docker run -i --rm -t js-hello node main.js # run
-```
-
-## References
-
-1. [Python Unit tests](https://docs.python.org/2/library/unittest.html)
-
+This can be run from a container with `./run cmds...`  `./run` with no arguments creates a shell into the running container.
 

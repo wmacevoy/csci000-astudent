@@ -33,10 +33,30 @@ test_project() {
          echo "failed" && exit 1
       fi
     done
+    popd
   done
 }
 
-for dockerfile in */Dockerfile
-do
-  test_project $(dirname "$dockerfile")
-done
+if [ $# -gt 0 ]
+then
+    for dir in "$@"
+    do
+	if ! test_project "$dir"
+	then
+	    echo "failed"
+	    exit 1
+	fi
+    done
+    echo "$@" tests passed.
+else 
+    for dockerfile in */Dockerfile
+    do
+	if ! test_project $(dirname "$dockerfile")
+	then
+	    echo "failed."
+	    exit 1
+	fi
+    done
+    echo "all tests passed"
+fi
+
